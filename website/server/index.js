@@ -24,18 +24,4 @@ const IS_DEV = nconf.get('IS_DEV');
 const CORES = Number(nconf.get('WEB_CONCURRENCY')) || 0;
 
 // Setup the cluster module
-if (CORES !== 0 && cluster.isMaster && (IS_DEV || IS_PROD)) {
-  // Fork workers. If config.json has WEB_CONCURRENCY=x,
-  // use that - otherwise, use all cpus-1 (production)
-  for (let i = 0; i < CORES; i += 1) {
-    cluster.fork();
-  }
-
-  cluster.on('disconnect', worker => {
-    const w = cluster.fork(); // replace the dead worker
-
-    logger.info(`[${new Date()}] [master:${process.pid}] worker:${worker.process.pid} disconnect! new worker:${w.process.pid} fork`);
-  });
-} else {
-  module.exports = require('./server.js');
-}
+module.exports = require('./server.js');

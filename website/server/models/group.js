@@ -1640,8 +1640,7 @@ export const model = mongoose.model('Group', schema);
 // initialize tavern if !exists (fresh installs)
 // do not run when testing as it's handled by the tests and can easily cause a race condition
 if (!nconf.get('IS_TEST')) {
-  model.countDocuments({ _id: TAVERN_ID }, (err, ct) => {
-    if (err) throw err;
+  model.countDocuments({ _id: TAVERN_ID }).then(ct => {
     if (ct > 0) return;
     new model({ // eslint-disable-line new-cap
       _id: TAVERN_ID,

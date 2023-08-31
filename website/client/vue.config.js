@@ -113,14 +113,14 @@ module.exports = {
       });
 
     // Disable eslint warnings when running the server
-    config.module
+    /*config.module
       .rule('eslint')
       .use('eslint-loader')
       .loader('eslint-loader')
       .tap(options => {
         options.quiet = true;
         return options;
-      });
+      });*/
 
     // Fix issue with Safari cache, see https://github.com/vuejs/vue-cli/issues/2509
     if (process.env.NODE_ENV === 'development') {

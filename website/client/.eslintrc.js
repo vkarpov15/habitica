@@ -12,8 +12,10 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // TODO find a way to let eslint understand webpack aliases
+    'import/no-extraneous-dependencies': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'import/order': 'off',
     'vue/no-v-html': 'off',
     'vue/html-self-closing': ['error', {
       html: {
