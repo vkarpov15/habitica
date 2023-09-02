@@ -1,4 +1,5 @@
 import nconf from 'nconf';
+import './libs/setupMongoose';
 import express from 'express';
 import http from 'http';
 import logger from './libs/logger';
@@ -10,7 +11,7 @@ import './libs/i18n';
 import attachMiddlewares from './middlewares/index';
 
 // Load config files
-import './libs/setupMongoose';
+
 import './libs/setupPassport';
 
 // Load some schemas & models

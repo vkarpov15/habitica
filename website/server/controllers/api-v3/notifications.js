@@ -80,14 +80,11 @@ api.readNotifications = {
       user.notifications.splice(index, 1);
     }
 
-    await user.updateOne({
-      $pull: { notifications: { id: { $in: notificationsIds } } },
-    }).exec();
-
     // Update the user version field manually,
     // it cannot be updated in the pre update hook
     // See https://github.com/HabitRPG/habitica/pull/9321#issuecomment-354187666 for more info
     user._v += 1;
+    await user.save();
 
     res.respond(200, user.notifications);
   },

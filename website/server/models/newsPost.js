@@ -53,7 +53,7 @@ let cachedLastNewsPost = null;
 schema.statics.getLastPostFromDatabase = async function getLastPostFromDatabase () {
   const post = await this.findOne({
     published: true,
-    publishDate: { $lte: new Date() },
+    //publishDate: { $lte: new Date() },
   }).sort({ publishDate: -1 }).exec();
 
   return post;

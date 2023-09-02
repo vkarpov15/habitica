@@ -238,12 +238,13 @@ async function getTasks (req, res, options = {}) {
       query.type = type.slice(0, -1); // removing the final "s"
     }
   } else {
-    query.$and = [{
+    Object.assign(query, { type: 'todo', completed: false });
+    /*query.$and = [{
       $or: [ // Exclude completed todos
         { type: 'todo', completed: false },
         { type: { $in: ['habit', 'daily', 'reward'] } },
       ],
-    }];
+    }];*/
   }
 
   const mQuery = Tasks.Task.find(query);
@@ -604,8 +605,11 @@ export async function scoreTasks (user, taskScorings, req, res) {
   });
 
   const moveUpdateObject = {};
-  if (pushIDs.length > 0) moveUpdateObject.$push = { 'tasksOrder.todos': { $each: pushIDs } };
-  if (pullIDs.length > 0) moveUpdateObject.$pull = { 'tasksOrder.todos': { $in: pullIDs } };
+  moveUpdateObject.$set = {
+    'tasksOrder.todos': user.tasksOrder.todos.filter(todo => !pullIDs.map(id => id.toString()).includes(todo.toString())).concat(pushIDs)
+  };
+  //if (pushIDs.length > 0) moveUpdateObject.$push = { 'tasksOrder.todos': { $each: pushIDs } };
+  //if (pullIDs.length > 0) moveUpdateObject.$pull = { 'tasksOrder.todos': { $in: pullIDs } };
   if (pushIDs.length > 0 || pullIDs.length > 0) {
     savePromises.push(user.updateOne(moveUpdateObject).exec());
   }
