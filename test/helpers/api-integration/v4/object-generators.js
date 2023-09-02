@@ -29,7 +29,7 @@ export async function generateUser (update = {}) {
 
   const apiUser = new ApiUser(user);
 
-  await apiUser.update(update);
+  await apiUser.updateOne(update);
 
   return apiUser;
 }

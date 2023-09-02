@@ -35,7 +35,7 @@ export async function generateUser (update = {}, overrides = {}) {
 
   const apiUser = new ApiUser(user);
 
-  await apiUser.update(update);
+  await apiUser.updateOne(update);
 
   return apiUser;
 }

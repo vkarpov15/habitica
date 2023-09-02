@@ -1391,7 +1391,7 @@ schema.methods.leave = async function leaveGroup (user, keep = 'keep-all', keepC
     _.remove(members, { _id: user._id });
 
     if (members.length === 0) {
-      promises.push(group.remove());
+      promises.push(group.deleteOne());
       return Promise.all(promises);
     }
   }
@@ -1501,7 +1501,7 @@ schema.methods.unlinkTask = async function groupUnlinkTask (
     }
 
     if (task) {
-      promises.push(task.remove());
+      promises.push(task.deleteOne());
     }
     // When multiple tasks are being unlinked at the same time,
     // save the user once outside of this function
@@ -1550,7 +1550,7 @@ schema.methods.removeTask = async function groupRemoveTask (task) {
       assignedUser.notifications.splice(notificationIndex, 1);
     }
 
-    await Tasks.Task.remove({ _id: userTask._id });
+    await Tasks.Task.deleteMany({ _id: userTask._id });
     removeFromArray(assignedUser.tasksOrder[`${task.type}s`], userTask._id);
     removalPromises.push(assignedUser.save());
   });

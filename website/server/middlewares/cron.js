@@ -100,7 +100,7 @@ async function cronAsync (req, res) {
     // Clear old completed todos - 30 days for free users, 90 for subscribers
     // Do not delete challenges completed todos TODO unless the task is broken?
     // Do not delete group completed todos
-    Tasks.Task.remove({
+    Tasks.Task.deleteOne({
       userId: user._id,
       type: 'todo',
       completed: true,
