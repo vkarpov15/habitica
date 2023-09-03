@@ -308,8 +308,10 @@ schema.statics.getGroups = async function getGroups (options = {}) {
           privacy: 'private',
           _id: { $in: user.guilds },
           'purchased.plan.customerId': { $exists: true },
+          // vkarpov15: need $or support support
           $or: [
             { 'purchased.plan.dateTerminated': null },
+            // vkarpov15: need $exists: false support
             { 'purchased.plan.dateTerminated': { $exists: false } },
             { 'purchased.plan.dateTerminated': { $gt: new Date() } },
           ],
@@ -1349,6 +1351,7 @@ schema.methods.leave = async function leaveGroup (user, keep = 'keep-all', keepC
   // Unlink group tasks
   const assignedTasks = await Tasks.Task.find({
     'group.id': group._id,
+    // vkarpov15: need $exists: false support
     userId: { $exists: false },
     'group.assignedUsers': user._id,
   }).exec();

@@ -28,6 +28,7 @@ schema.statics.getNews = async function getNews (isAdmin, options = { page: 0 })
   if (!isAdmin) {
     query = this.find({
       published: true,
+      // vkarpov15: need $lte support
       publishDate: { $lte: new Date() },
     });
   } else {
@@ -53,6 +54,7 @@ let cachedLastNewsPost = null;
 schema.statics.getLastPostFromDatabase = async function getLastPostFromDatabase () {
   const post = await this.findOne({
     published: true,
+    // vkarpov15: need $lte support
     //publishDate: { $lte: new Date() },
   }).sort({ publishDate: -1 }).exec();
 

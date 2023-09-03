@@ -19,6 +19,7 @@ const subDiscriminatorOptions = _.defaults(_.cloneDeep(discriminatorOptions), {
 
 export const tasksTypes = ['habit', 'daily', 'todo', 'reward'];
 export const taskIsGroupOrChallengeQuery = {
+  // vkarpov15: need $and, $or, $exists: false support
   $and: [ // exclude challenge and group tasks
     {
       $or: [
